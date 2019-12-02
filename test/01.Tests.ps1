@@ -21,6 +21,6 @@ Describe 'Day 01b' {
 		.\01b.ps1 -MassValue 1969 | Should -Be 966
 	}
 	It "100756 => 50346" {
-		.\01b.ps1 -MassValue 100756 | Should -Be 50345
+		.\01b.ps1 -MassValue 100756 | Should -Be 50346
 	}
 }
