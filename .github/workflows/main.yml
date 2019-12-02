@@ -13,3 +13,6 @@ jobs:
     - name: Run Tests
       run: Invoke-Pester -EnableExit
       shell: pwsh
+    - name: Where Am I?
+      run: ls
+      shell: pwsh
