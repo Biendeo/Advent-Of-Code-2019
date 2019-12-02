@@ -13,7 +13,7 @@ if (!$InputFile -and !$MassValue) {
 }
 
 if ($InputFile) {
-	$Input = [int[]](Get-Content $InputFile | foreach { [int]$_ })
+	$Input = [int[]](Get-Content $InputFile | ForEach-Object { [int]$_ })
 } else {
 	$Input = [int[]]@($MassValue)
 }
