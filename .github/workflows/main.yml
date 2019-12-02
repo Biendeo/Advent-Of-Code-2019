@@ -7,8 +7,9 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Install Pester
-      - run: Install-Module Pester -Force -Scope CurrentUser
-      - shell: pwsh
-      - name: Run Tests
-      - run: Invoke-Pester -EnableExit
+    - name: Install Pester
+      run: Install-Module Pester -Force -Scope CurrentUser
+      shell: pwsh
+    - name: Run Tests
+      run: Invoke-Pester -EnableExit
+      shell: pwsh
