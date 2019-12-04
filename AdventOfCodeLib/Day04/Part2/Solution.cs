@@ -2,7 +2,7 @@
 using System.Linq;
 
 namespace AdventOfCodeLib.Day04.Part2 {
-	public class Solution {
+	public static class Solution {
 		public static int SolveFromInputFile(string inputFile) {
 			string[] input = File.ReadAllText(inputFile).Split("-");
 			return SolveFromRange(int.Parse(input[0]), int.Parse(input[1]));
