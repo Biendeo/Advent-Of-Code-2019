@@ -22,7 +22,8 @@ namespace AdventOfCodeLib.Day02.Part1 {
 		}
 
 		public static List<int> SolveFromInputFileOutputProgram(string inputFile, bool add1202 = true) {
-			var convertedProgram = new List<int>(File.ReadAllText(inputFile).Split(",").Select(c => int.Parse(c))); if (add1202) {
+			var convertedProgram = new List<int>(File.ReadAllText(inputFile).Split(",").Select(c => int.Parse(c)));
+			if (add1202) {
 				convertedProgram[1] = 12;
 				convertedProgram[2] = 2;
 			}

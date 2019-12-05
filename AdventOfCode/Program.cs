@@ -35,6 +35,14 @@ namespace AdventOfCode {
 			Console.WriteLine("Day 04 - Part 2");
 			Console.WriteLine(AdventOfCodeLib.Day04.Part2.Solution.SolveFromInputFile(Path.Combine("input", "04.txt")));
 			Console.WriteLine();
+
+			Console.WriteLine("Day 05 - Part 1");
+			Console.WriteLine(AdventOfCodeLib.Day05.Part1.Solution.SolveFromInputFile(Path.Combine("input", "05.txt")));
+			Console.WriteLine();
+
+			Console.WriteLine("Day 05 - Part 2");
+			Console.WriteLine(AdventOfCodeLib.Day05.Part2.Solution.SolveFromInputFile(Path.Combine("input", "05.txt")));
+			Console.WriteLine();
 		}
 	}
 }
