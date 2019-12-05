@@ -1,9 +1,7 @@
 ﻿using AdventOfCodeLib.Common;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace AdventOfCodeLib.Day05.Part1 {
 	public static class Solution {

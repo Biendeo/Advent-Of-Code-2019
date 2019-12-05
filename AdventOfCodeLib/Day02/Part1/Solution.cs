@@ -1,4 +1,4 @@
-﻿using System;
+﻿using AdventOfCodeLib.Common;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,31 +31,9 @@ namespace AdventOfCodeLib.Day02.Part1 {
 		}
 
 		private static List<int> Solve(List<int> program) {
-			var runningProgram = new List<int>(program);
-			ExecuteProgram(runningProgram);
-			return runningProgram;
-		}
-
-		private static void ExecuteProgram(List<int> program) {
-			int currentIndex = 0;
-
-			while (currentIndex < program.Count) {
-				if (program[currentIndex] == 1) {
-					int num1 = program[program[currentIndex + 1]];
-					int num2 = program[program[currentIndex + 2]];
-					program[program[currentIndex + 3]] = num1 + num2;
-					currentIndex += 4;
-				} else if (program[currentIndex] == 2) {
-					int num1 = program[program[currentIndex + 1]];
-					int num2 = program[program[currentIndex + 2]];
-					program[program[currentIndex + 3]] = num1 * num2;
-					currentIndex += 4;
-				} else if (program[currentIndex] == 99) {
-					break;
-				} else {
-					throw new ArgumentException($"Program encountered an opcode of {program[currentIndex]}");
-				}
-			}
+			var computer = new IntcodeComputer(program, new List<int>());
+			computer.RunProgram();
+			return computer.GetLastProgramState();
 		}
 	}
 }
