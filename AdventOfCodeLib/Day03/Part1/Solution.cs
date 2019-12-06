@@ -18,7 +18,7 @@ namespace AdventOfCodeLib.Day03.Part1 {
 			var path1Coordinates = GetPathCoordinates(path1);
 			var path2Coordinates = GetPathCoordinates(path2);
 			path1Coordinates.IntersectWith(path2Coordinates);
-			return path1Coordinates.Min(c => c.Manhatten());
+			return path1Coordinates.AsParallel().Min(c => c.Manhatten());
 		}
 
 		private static HashSet<Coordinate> GetPathCoordinates(List<string> path) {

@@ -29,7 +29,7 @@ namespace AdventOfCodeLib.Day06.Part1 {
 				centreTree.AddChild(orbitTree);
 			}
 
-			return planetDict.Values.Sum(t => t.Depth);
+			return planetDict.Values.AsParallel().Sum(t => t.Depth);
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using AdventOfCodeLib.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,8 +16,11 @@ namespace AdventOfCodeLib.Day02.Part2 {
 		}
 
 		private static int Solve(List<int> program) {
-			for (int noun = 0; noun < 100; ++noun) {
-				for (int verb = 0; verb < 100; ++verb) {
+			int result = -1;
+			Enumerable.Range(0, 10000).AsParallel().ForAll(x => {
+				if (result == -1) {
+					int noun = x / 100;
+					int verb = x % 100;
 					var modifiedProgram = new List<int>(program) {
 						[1] = noun,
 						[2] = verb
@@ -24,12 +28,12 @@ namespace AdventOfCodeLib.Day02.Part2 {
 					var computer = new IntcodeComputer(modifiedProgram, new List<int>());
 					computer.RunProgram();
 					if (computer.GetLastProgramState()[0] == 19690720) {
-						return noun * 100 + verb;
+						result = x;
 					}
 				}
-			}
+			});
 
-			return -1;
+			return result;
 		}
 	}
 }

@@ -9,7 +9,7 @@ namespace AdventOfCodeLib.Day04.Part2 {
 		}
 
 		public static int SolveFromRange(int lowerRange, int upperRange) {
-			return Enumerable.Range(lowerRange, upperRange - lowerRange).Count(p => IsPasswordValid(p));
+			return Enumerable.Range(lowerRange, upperRange - lowerRange).AsParallel().Count(p => IsPasswordValid(p));
 		}
 
 		public static bool IsPasswordValid(int password) {

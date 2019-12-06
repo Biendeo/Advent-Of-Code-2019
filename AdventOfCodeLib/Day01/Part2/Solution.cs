@@ -14,7 +14,7 @@ namespace AdventOfCodeLib.Day01.Part2 {
 		}
 
 		private static int Solve(List<int> masses) {
-			return masses.Sum(m => GetFuelCount(m));
+			return masses.AsParallel().Sum(m => GetFuelCount(m));
 		}
 
 		private static int GetFuelCount(int mass) {

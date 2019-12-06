@@ -20,11 +20,7 @@ namespace AdventOfCodeLib.Day03.Part2 {
 			var path2Coordinates = GetPathCoordinates(path2);
 			var intersections = new HashSet<Coordinate>(path1Coordinates);
 			intersections.IntersectWith(path2Coordinates);
-			int shortestIntersection = int.MaxValue;
-			foreach (var intersection in intersections) {
-				shortestIntersection = Math.Min(shortestIntersection, path1Coordinates.IndexOf(intersection) + path2Coordinates.IndexOf(intersection) + 2);
-			}
-			return shortestIntersection;
+			return intersections.AsParallel().Min(i => path1Coordinates.IndexOf(i) + path2Coordinates.IndexOf(i) + 2);
 		}
 
 		private static List<Coordinate> GetPathCoordinates(List<string> path) {
