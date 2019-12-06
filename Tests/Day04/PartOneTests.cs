@@ -7,7 +7,7 @@ namespace Tests.Day04 {
 		[InlineData(111111, true)]
 		[InlineData(223450, false)]
 		[InlineData(123789, false)]
-		public void TestProgram(int password, bool expectedResult) {
+		public void TestPassword(int password, bool expectedResult) {
 			Assert.Equal(expectedResult, Solution.IsPasswordValid(password));
 		}
 	}
