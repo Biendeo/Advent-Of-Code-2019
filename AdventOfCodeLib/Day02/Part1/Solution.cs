@@ -31,7 +31,7 @@ namespace AdventOfCodeLib.Day02.Part1 {
 		}
 
 		private static List<int> Solve(List<int> program) {
-			var computer = new IntcodeComputer(program, new List<int>());
+			var computer = new IntcodeComputer(program);
 			computer.RunProgram();
 			return computer.GetLastProgramState();
 		}

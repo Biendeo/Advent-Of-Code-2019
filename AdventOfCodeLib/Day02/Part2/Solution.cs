@@ -25,7 +25,7 @@ namespace AdventOfCodeLib.Day02.Part2 {
 						[1] = noun,
 						[2] = verb
 					};
-					var computer = new IntcodeComputer(modifiedProgram, new List<int>());
+					var computer = new IntcodeComputer(modifiedProgram);
 					computer.RunProgram();
 					if (computer.GetLastProgramState()[0] == 19690720) {
 						result = x;

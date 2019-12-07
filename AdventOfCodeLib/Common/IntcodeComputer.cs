@@ -20,23 +20,26 @@ namespace AdventOfCodeLib.Common {
 		}
 
 		private readonly List<int> initialProgram;
-		private readonly Queue<int> initialInputBuffer;
-
 		private List<int> lastProgramState;
-		private List<int> lastOutputBuffer;
 
-		public IntcodeComputer(List<int> program, List<int> inputBuffer) {
+		private readonly Func<int> inputFunc;
+		private readonly Action<int> outputFunc;
+
+
+		public IntcodeComputer(List<int> program) : this(program, () => 1000000000, (x) => { }) { }
+
+		public IntcodeComputer(List<int> program, Queue<int> inputBuffer, List<int> outputBuffer) : this(program, () => inputBuffer.Dequeue(), (x) => outputBuffer.Add(x)) { }
+
+		public IntcodeComputer(List<int> program, Func<int> inputFunc, Action<int> outputFunc) {
 			initialProgram = new List<int>(program);
-			initialInputBuffer = new Queue<int>(inputBuffer);
 			lastProgramState = new List<int>();
-			lastOutputBuffer = new List<int>();
+			this.inputFunc = inputFunc;
+			this.outputFunc = outputFunc;
 		}
 
 		public void RunProgram() {
 			int currentIndex = 0;
 			var program = new List<int>(initialProgram);
-			var inputBuffer = new Queue<int>(initialInputBuffer);
-			var outputBuffer = new List<int>();
 
 			bool programEnd = false;
 
@@ -49,10 +52,10 @@ namespace AdventOfCodeLib.Common {
 						PerformMultiplication(ref program, ref currentIndex);
 						break;
 					case Opcode.Input:
-						PerformInput(ref program, ref currentIndex, ref inputBuffer);
+						PerformInput(ref program, ref currentIndex, inputFunc);
 						break;
 					case Opcode.Output:
-						PerformOutput(ref program, ref currentIndex, ref outputBuffer);
+						PerformOutput(ref program, ref currentIndex, outputFunc);
 						break;
 					case Opcode.JumpIfTrue:
 						PerformJumpIfTrue(ref program, ref currentIndex);
@@ -73,15 +76,10 @@ namespace AdventOfCodeLib.Common {
 			}
 
 			lastProgramState = program;
-			lastOutputBuffer = outputBuffer;
 		}
 
 		public List<int> GetLastProgramState() {
 			return new List<int>(lastProgramState);
-		}
-
-		public List<int> GetLastOutputBuffer() {
-			return new List<int>(lastOutputBuffer);
 		}
 
 		private static Opcode ExtractOpcode(int instruction) {
@@ -129,13 +127,13 @@ namespace AdventOfCodeLib.Common {
 			currentIndex += 4;
 		}
 
-		private static void PerformInput(ref List<int> program, ref int currentIndex, ref Queue<int> inputBuffer) {
-			WriteValue(inputBuffer.Dequeue(), program[currentIndex + 1], ExtractParameterMode(program[currentIndex], 1), ref program);
+		private static void PerformInput(ref List<int> program, ref int currentIndex, Func<int> inputFunc) {
+			WriteValue(inputFunc.Invoke(), program[currentIndex + 1], ExtractParameterMode(program[currentIndex], 1), ref program);
 			currentIndex += 2;
 		}
 
-		private static void PerformOutput(ref List<int> program, ref int currentIndex, ref List<int> outputBuffer) {
-			outputBuffer.Add(ReadValue(program[currentIndex + 1], ExtractParameterMode(program[currentIndex], 1), ref program));
+		private static void PerformOutput(ref List<int> program, ref int currentIndex, Action<int> outputFunc) {
+			outputFunc.Invoke(ReadValue(program[currentIndex + 1], ExtractParameterMode(program[currentIndex], 1), ref program));
 			currentIndex += 2;
 		}
 

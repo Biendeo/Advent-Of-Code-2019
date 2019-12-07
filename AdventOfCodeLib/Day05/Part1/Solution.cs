@@ -11,9 +11,10 @@ namespace AdventOfCodeLib.Day05.Part1 {
 		}
 
 		private static int Solve(List<int> program) {
-			var computer = new IntcodeComputer(program, new List<int> { 1 });
+			var outputBuffer = new List<int>();
+			var computer = new IntcodeComputer(program, new Queue<int>(new int[] { 1 }), outputBuffer);
 			computer.RunProgram();
-			return computer.GetLastOutputBuffer().Last();
+			return outputBuffer.Last();
 		}
 	}
 }
