@@ -6,16 +6,16 @@ using System.Threading;
 
 namespace AdventOfCodeLib.Day07.Part2 {
 	public static class Solution {
-		public static int SolveFromInputFile(string inputFile) {
-			var convertedProgram = new List<int>(File.ReadAllText(inputFile).Split(",").Select(c => int.Parse(c)));
+		public static long SolveFromInputFile(string inputFile) {
+			var convertedProgram = new List<long>(File.ReadAllText(inputFile).Split(",").Select(c => long.Parse(c)));
 			return Solve(convertedProgram);
 		}
 
-		public static int Solve(List<int> program) {
-			return new List<int> { 5, 6, 7, 8, 9 }.GetAllCombinations().AsParallel().Max(settings => {
-				var buffers = new List<Queue<int>>();
+		public static long Solve(List<long> program) {
+			return new List<long> { 5, 6, 7, 8, 9 }.GetAllCombinations().AsParallel().Max(settings => {
+				var buffers = new List<Queue<long>>();
 				foreach (int i in Enumerable.Range(0, settings.Count())) {
-					buffers.Add(new Queue<int>());
+					buffers.Add(new Queue<long>());
 					buffers[i].Enqueue(settings.ToList()[i]);
 				}
 				buffers[0].Enqueue(0);

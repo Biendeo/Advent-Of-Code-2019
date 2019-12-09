@@ -5,17 +5,17 @@ using System.Linq;
 
 namespace AdventOfCodeLib.Day07.Part1 {
 	public static class Solution {
-		public static int SolveFromInputFile(string inputFile) {
-			var convertedProgram = new List<int>(File.ReadAllText(inputFile).Split(",").Select(c => int.Parse(c)));
+		public static long SolveFromInputFile(string inputFile) {
+			var convertedProgram = new List<long>(File.ReadAllText(inputFile).Split(",").Select(c => long.Parse(c)));
 			return Solve(convertedProgram);
 		}
 
-		public static int Solve(List<int> program) {
-			return new List<int> { 0, 1, 2, 3, 4 }.GetAllCombinations().AsParallel().Max(settings => {
-				var lastOutput = new List<int> { 0 };
-				foreach (int setting in settings) {
-					var output = new List<int>();
-					var computer = new IntcodeComputer(program, new Queue<int>(new int[] { setting, lastOutput.Single() }), output);
+		public static long Solve(List<long> program) {
+			return new List<long> { 0, 1, 2, 3, 4 }.GetAllCombinations().AsParallel().Max(settings => {
+				var lastOutput = new List<long> { 0 };
+				foreach (long setting in settings) {
+					var output = new List<long>();
+					var computer = new IntcodeComputer(program, new Queue<long>(new long[] { setting, lastOutput.Single() }), output);
 					computer.RunProgram();
 					lastOutput = output;
 				}
