@@ -52,6 +52,14 @@ namespace AdventOfCodeLib.Common {
 			return a.CompareTo(b) >= 0;
 		}
 
+		public static Coordinate operator +(Coordinate a, Coordinate b) {
+			return new Coordinate(a.X + b.X, a.Y + b.Y);
+		}
+
+		public static Coordinate operator -(Coordinate a, Coordinate b) {
+			return new Coordinate(a.X - b.X, a.Y - b.Y);
+		}
+
 		public Coordinate Clone() {
 			return new Coordinate(X, Y);
 		}
