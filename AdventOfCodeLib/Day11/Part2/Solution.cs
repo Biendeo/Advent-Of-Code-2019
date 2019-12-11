@@ -17,6 +17,7 @@ namespace AdventOfCodeLib.Day11.Part2 {
 			var outputBuffer = new Queue<long>();
 			var inputBuffer = new Queue<long>();
 			inputBuffer.Enqueue(1);
+			bool programFinished = false;
 			var computer = new IntcodeComputer(program, () => {
 				lock (inputBuffer) {
 					while (inputBuffer.Count == 0) {
@@ -36,6 +37,7 @@ namespace AdventOfCodeLib.Day11.Part2 {
 			var computerThread = new Thread(() => {
 				computer.RunProgram();
 				lock (outputBuffer) {
+					programFinished = true;
 					Monitor.PulseAll(outputBuffer);
 				}
 			});
@@ -48,14 +50,14 @@ namespace AdventOfCodeLib.Day11.Part2 {
 			var directions = new List<Coordinate> { new Coordinate(0, 1), new Coordinate(1, 0), new Coordinate(0, -1), new Coordinate(-1, 0) };
 			var currentPosition = new Coordinate(0, 0);
 
-			while (computerThread.IsAlive) {
+			while (!programFinished) {
 				int paintValue = -1;
 
 				lock (outputBuffer) {
-					while (outputBuffer.Count < 2 && computerThread.ThreadState != ThreadState.Stopped) {
+					while (outputBuffer.Count < 2 && !programFinished) {
 						Monitor.Wait(outputBuffer);
 					}
-					if (!computerThread.IsAlive) {
+					if (programFinished) {
 						break;
 					}
 					paintValue = (int)outputBuffer.Dequeue();
