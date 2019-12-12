@@ -27,6 +27,8 @@ namespace AdventOfCode {
 			RunSolution("Day 10 - Part 2", () => AdventOfCodeLib.Day10.Part2.Solution.SolveFromInputFile(Path.Combine("input", "10.txt")));
 			RunSolution("Day 11 - Part 1", () => AdventOfCodeLib.Day11.Part1.Solution.SolveFromInputFile(Path.Combine("input", "11.txt")));
 			RunSolution("Day 11 - Part 2", () => AdventOfCodeLib.Day11.Part2.Solution.SolveFromInputFile(Path.Combine("input", "11.txt")));
+			RunSolution("Day 12 - Part 1", () => AdventOfCodeLib.Day12.Part1.Solution.SolveFromInputFile(Path.Combine("input", "12.txt")));
+			RunSolution("Day 12 - Part 2", () => AdventOfCodeLib.Day12.Part2.Solution.SolveFromInputFile(Path.Combine("input", "12.txt")));
 		}
 
 		private static void RunSolution<T>(string solutionName, Func<T> solution) {

@@ -6,7 +6,7 @@ namespace Tests.Day08 {
 	public class PartOneTests {
 		[Theory]
 		[MemberData(nameof(TestData))]
-		public void TestOutputSignal(List<int> imagePixels, int width, int height, int expectedResult) {
+		public void TestExpectedPixels(List<int> imagePixels, int width, int height, int expectedResult) {
 			Assert.Equal(expectedResult, Solution.Solve(imagePixels, width, height));
 		}
 
