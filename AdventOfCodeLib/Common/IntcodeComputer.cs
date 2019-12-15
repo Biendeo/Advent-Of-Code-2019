@@ -27,6 +27,8 @@ namespace AdventOfCodeLib.Common {
 		private readonly Func<long> inputFunc;
 		private readonly Action<long> outputFunc;
 
+		private bool aborting;
+
 		public IntcodeComputer(List<long> program) : this(program, () => 1000000000, (x) => { }) { }
 
 		public IntcodeComputer(List<long> program, Queue<long> inputBuffer, List<long> outputBuffer) : this(program, () => inputBuffer.Dequeue(), (x) => outputBuffer.Add(x)) { }
@@ -36,6 +38,7 @@ namespace AdventOfCodeLib.Common {
 			lastProgramState = new List<long>();
 			this.inputFunc = inputFunc;
 			this.outputFunc = outputFunc;
+			aborting = false;
 		}
 
 		public void RunProgram() {
@@ -45,7 +48,7 @@ namespace AdventOfCodeLib.Common {
 
 			bool programEnd = false;
 
-			while (currentIndex < program.Count && !programEnd) {
+			while (currentIndex < program.Count && !programEnd && !aborting) {
 				switch (ExtractOpcode(program[currentIndex])) {
 					case Opcode.Addition:
 						PerformAddtion(ref program, ref currentIndex, ref relativeBase);
@@ -85,6 +88,10 @@ namespace AdventOfCodeLib.Common {
 
 		public List<long> GetLastProgramState() {
 			return new List<long>(lastProgramState);
+		}
+
+		public void Abort() {
+			aborting = true;
 		}
 
 		private static Opcode ExtractOpcode(long instruction) {
