@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -16,7 +14,6 @@ namespace AdventOfCodeLib.Day16.Part2 {
 				// Just substring the bit that is needed.
 				var condensedSignal = signal.Skip(offset).ToList();
 				for (int i = 0; i < phases; ++i) {
-					Console.WriteLine($"Phase {i + 1}: {string.Join("", condensedSignal).Substring(0, 8)}");
 					PerformPhase(condensedSignal);
 				}
 				return string.Join("", condensedSignal).Substring(0, 8);
@@ -34,11 +31,9 @@ namespace AdventOfCodeLib.Day16.Part2 {
 
 		private static List<T> RepeatList<T>(List<T> input, int repeats) {
 			var r = new List<T>(input.Count * repeats);
-
 			for (int i = 0; i < repeats; ++i) {
 				r.AddRange(input);
 			}
-
 			return r;
 		}
 	}
