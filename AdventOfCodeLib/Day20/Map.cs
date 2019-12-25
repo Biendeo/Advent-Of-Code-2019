@@ -1,8 +1,6 @@
 ﻿using AdventOfCodeLib.Common;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace AdventOfCodeLib.Day20 {
 	internal class Map {
@@ -13,6 +11,8 @@ namespace AdventOfCodeLib.Day20 {
 
 		public Map(List<string> rawMap) {
 			Warps = new List<Warp>();
+			Start = new Coordinate(-1, -1);
+			End = new Coordinate(-1, -1);
 			var rawMapEditable = rawMap.Select(r => r.Select(c => c).ToList()).ToList();
 
 			for (int y = 0; y < rawMapEditable.Count; ++y) {

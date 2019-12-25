@@ -107,23 +107,23 @@ namespace AdventOfCodeLib.Day18.Part1 {
 		private static int GetShortestPath(Graph graph) {
 			int keysRequired = 0;
 			var seenStates = new Dictionary<int, int>();
-			foreach (var key in graph.Where(e => e.Source == '@').Select(e => e.Destination)) {
+			foreach (char key in graph.Where(e => e.Source == '@').Select(e => e.Destination)) {
 				keysRequired |= 1 << (key - 'a');
 			}
 			var queue = new List<(char LastKey, int KeysObtained, int Distance, int Heuristic)>();
-			foreach (var startingEdge in graph.Where(e => e.Source == '@' && e.KeysRequired == 0)) {
-				int keysObtained = 1 << (startingEdge.Destination - 'a');
-				seenStates[keysObtained | ((startingEdge.Destination - 'a') << 26)] = startingEdge.Distance;
-				queue.Add((startingEdge.Destination, keysObtained, startingEdge.Distance, GetHeuristic(graph, startingEdge.Destination, keysObtained)));
+			foreach (var (Source, Destination, Distance, KeysRequired) in graph.Where(e => e.Source == '@' && e.KeysRequired == 0)) {
+				int keysObtained = 1 << (Destination - 'a');
+				seenStates[keysObtained | ((Destination - 'a') << 26)] = Distance;
+				queue.Add((Destination, keysObtained, Distance, GetHeuristic(graph, Destination, keysObtained)));
 			}
 			queue.Sort((a, b) => (a.Distance + a.Heuristic).CompareTo(b.Distance + b.Heuristic));
 			while (queue.Count > 0) {
-				var state = queue.First();
+				var (LastKey, KeysObtained, Distance, Heuristic) = queue.First();
 				queue.RemoveAt(0);
-				if (AreAllKeysAcquired(keysRequired, state.KeysObtained)) return state.Distance;
-				foreach (var nextEdge in graph.Where(e => e.Source == state.LastKey && ((state.KeysObtained & (1 << (e.Destination - 'a'))) == 0) && AreRequiredKeysAcquired(e.KeysRequired, state.KeysObtained))) {
-					int newKeysObtained = state.KeysObtained | (1 << nextEdge.Destination - 'a');
-					int newDistance = state.Distance + nextEdge.Distance;
+				if (AreAllKeysAcquired(keysRequired, KeysObtained)) return Distance;
+				foreach (var nextEdge in graph.Where(e => e.Source == LastKey && ((KeysObtained & (1 << (e.Destination - 'a'))) == 0) && AreRequiredKeysAcquired(e.KeysRequired, KeysObtained))) {
+					int newKeysObtained = KeysObtained | (1 << nextEdge.Destination - 'a');
+					int newDistance = Distance + nextEdge.Distance;
 					if (!seenStates.ContainsKey(newKeysObtained | ((nextEdge.Destination - 'a') << 26)) || seenStates[newKeysObtained | ((nextEdge.Destination - 'a') << 26)] > newDistance) {
 						seenStates[newKeysObtained | ((nextEdge.Destination - 'a') << 26)] = newDistance;
 						queue.Add((nextEdge.Destination, newKeysObtained, newDistance, GetHeuristic(graph, nextEdge.Destination, newKeysObtained)));

@@ -1,7 +1,4 @@
 ﻿using AdventOfCodeLib.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AdventOfCodeLib.Day20 {
 	internal class Warp {
